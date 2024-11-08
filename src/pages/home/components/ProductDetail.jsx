@@ -7,7 +7,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    // Obtener el producto por ID
+    
     getProductById(id)
       .then((data) => setProduct(data))
       .catch((error) => console.error('Error al obtener los detalles del producto:', error));
