@@ -1,10 +1,12 @@
 import { Route, Routes } from "react-router-dom";
+import TopHeader from './pages/home/components/TopHeader';
 import NavBar from './pages/home/components/navBar'; 
 import { HomePage, LoginPage, Register, AboutUs, NotFound } from './pages';
 
 function App() {
   return (
     <>
+      <TopHeader />
       <NavBar /> 
       <Routes>
         <Route path="/" element={<HomePage />} />
