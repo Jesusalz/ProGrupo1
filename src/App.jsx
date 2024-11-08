@@ -1,10 +1,11 @@
-import { Route, Routes } from "react-router-dom"
-import {HomePage , LoginPage, Register, AboutUs, NotFound} from './pages'
+import { Route, Routes } from "react-router-dom";
+import NavBar from './pages/home/components/NavBar'; 
+import { HomePage, LoginPage, Register, AboutUs, NotFound } from './pages';
 
 function App() {
-
   return (
     <>
+      <NavBar /> 
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -13,7 +14,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
