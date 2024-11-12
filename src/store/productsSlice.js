@@ -4,13 +4,18 @@ import { getProducts } from '../services/api';
 // Acción asíncrona para obtener los productos
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
-  async () => {
-    const data = await getProducts();  
-    return data.products;  
+  async (_, { rejectWithValue }) => {
+    try {
+      const data = await getProducts();
+      return Array.isArray(data.products) ? data.products : [];
+    } catch (error) {
+      // Retorna un mensaje de error 
+      return rejectWithValue('Error al cargar los productos');
+    }
   }
 );
 
-// slice para manejar el estado de los productos
+// Slice para manejar el estado de los productos
 const productsSlice = createSlice({
   name: 'products',
   initialState: {
@@ -23,6 +28,7 @@ const productsSlice = createSlice({
     builder
       .addCase(fetchProducts.pending, (state) => {
         state.status = 'loading';
+        state.error = null; 
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = 'succeeded';
@@ -30,9 +36,10 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload || 'Error desconocido'; 
       });
   },
 });
 
 export default productsSlice.reducer;
+

@@ -5,7 +5,7 @@ import Product from './components/Product';
 
 export function HomePage() {
   const dispatch = useDispatch();
-  const { products, status, error } = useSelector((state) => state.products);
+  const { products = [], status, error } = useSelector((state) => state.products); 
 
   useEffect(() => {
     if (status === 'idle') {
