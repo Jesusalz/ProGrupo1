@@ -69,7 +69,7 @@ export default function Footer() {
               </h3>
               <div className="flex flex-col mt-6">
                 <p className="text-xs font-medium opacity-70 text-neutral-50">
-                  Ahorra $3 solo para nuevos usuarios de la app
+                  Ahorra $23 solo para nuevos usuarios de la app
                 </p>
                 <div className="flex gap-2 items-center mt-2">
                   <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/117cd7f055594d6d6b65871991299066ef74aad6e2cf4b309b868fcef07af99e?placeholderIfAbsent=true&apiKey=cc67020b6a86463497ac5c7de37ca6f2" alt="Código QR" className="object-contain shrink-0 self-stretch my-auto w-20 aspect-square" />
