@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProductById } from '../../services/api';
-import ProductDetail from './components/ProductDetail';
+import { ProductDetail } from '../home/components/ProductDetail';
+
 
 export const ProductDetailPage = () => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ export const ProductDetailPage = () => {
   if (!product) return <p>Cargando detalles del producto...</p>;
 
   return (
-    <div>
+    <div className="container mx-auto px-4 py-8">
       <ProductDetail product={product} />
     </div>
   );
