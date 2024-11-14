@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { getProducts } from '../services/api'; 
 import Product from './Product';
 
-const ProductList = () => {
+export const ProductList = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    // Llamar a la API para obtener los productos
     getProducts()
       .then((data) => setProducts(data.products))  
       .catch((error) => console.error('Error fetching products:', error));
@@ -27,5 +26,3 @@ const ProductList = () => {
     </div>
   );
 };
-
-export default ProductList;

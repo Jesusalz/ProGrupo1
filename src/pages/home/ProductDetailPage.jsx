@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProductById } from '../../services/api';
-import ProductDetail from './components/ProductDetail'; 
+import ProductDetail from './components/ProductDetail';
 
-const ProductDetailPage = () => {
+export const ProductDetailPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
 
@@ -17,9 +17,7 @@ const ProductDetailPage = () => {
 
   return (
     <div>
-      <ProductDetail product={product} /> 
+      <ProductDetail product={product} />
     </div>
   );
 };
-
-export default ProductDetailPage;

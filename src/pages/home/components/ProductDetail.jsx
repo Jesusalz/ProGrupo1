@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductDetail = ({ product }) => {
+export const ProductDetail = ({ product }) => {
   return (
     <div>
       <h1>{product.title}</h1>
@@ -26,7 +26,5 @@ const ProductDetail = ({ product }) => {
     </div>
   );
 };
-
-export default ProductDetail;
 
 
