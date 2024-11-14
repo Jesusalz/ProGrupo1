@@ -13,9 +13,9 @@ export const NavBar = () => {
       setSearchTerm(''); // Limpia el input después de buscar
     }
   };
-
+// Color del NavBar
   return (
-    <nav className="bg-sky-500 bg-opacity-70 backdrop-blur-lg text-white w-full">
+    <nav className="bg-red-700  backdrop-blur-lg text-white w-full">   
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         <h1 className="text-2xl font-bold">Grupo 1</h1>
 
