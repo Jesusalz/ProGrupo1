@@ -8,4 +8,4 @@
 
 - Utilities
   - camelCase para lo que es el codigo.
-  - Clean architecture, para lo que es la arquitectura.
+  - Clean architecture, para lo que es la arquitectura..
