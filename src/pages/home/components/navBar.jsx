@@ -24,7 +24,8 @@ export const NavBar = () => {
       <div className='flex justify-center items-center bg-slate-100 rounded gap-4 shadow-slate-500'>
         <input type="text"
           placeholder="What are you looking for?"
-          onChange={handleSearch} 
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onClick={handleSearch}
           className="bg-slate-100 w-56 p-2 rounded-lg focus:outline-none"/>
           <button>
             <MagnifyingGlassIcon className="w-6 h-6 m-2 bg-slate text-gray-400 cursor-pointer" />
