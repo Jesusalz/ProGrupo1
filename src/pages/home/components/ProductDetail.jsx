@@ -1,7 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export const ProductDetail = ({ product }) => {
   const [selectedImage, setSelectedImage] = useState(0);
+
+  useEffect(() => {
+    let isSubscribed = true;
+
+    const loadImage = async () => {
+      try {
+        if (isSubscribed && product.images[selectedImage]) {
+          const img = new Image();
+          img.src = product.images[selectedImage];
+        }
+      } catch (error) {
+        console.error('Error loading image:', error);
+      }
+    };
+
+    loadImage();
+
+    return () => {
+      isSubscribed = false;
+    };
+  }, [selectedImage, product.images]);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -68,5 +89,3 @@ export const ProductDetail = ({ product }) => {
     </div>
   );
 };
-
-
