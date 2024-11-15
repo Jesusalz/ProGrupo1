@@ -23,6 +23,11 @@ export function Nav() {
                     className={({ isActive }) => isActive ? "text-blue-400" : "hover:text-gray-400"}
                 >Sign up</NavLink>
             </li>
+            <li>
+                <NavLink to="/register"
+                    className={({ isActive }) => isActive ? "text-blue-400" : "hover:text-gray-400"}
+                >Register</NavLink>
+            </li>
         </ul>
     </nav>
   )
