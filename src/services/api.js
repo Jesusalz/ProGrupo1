@@ -46,6 +46,7 @@ export const getPixabayImages = async (query, limit = 8) => {
   }
 };
 
+
 export const registerUser = async (userData) => {
   try {
     const response = await api.post('/users/register', userData);
@@ -55,4 +56,3 @@ export const registerUser = async (userData) => {
     throw error.response?.data || { message: 'Error en el registro' };
   }
 };
-export default api;
