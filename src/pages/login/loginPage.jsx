@@ -1,6 +1,13 @@
-import React, {useState} from "react";
-import ImagenCarrito from '../../../img_login.jpeg'
+import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../../store/authSlice';
+import ImagenCarrito from '../../../img_login.jpeg';
+
 export function LoginPage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -13,19 +20,26 @@ export function LoginPage() {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const storedEmail = localStorage.getItem('email');
-    const storedPassword = localStorage.getItem('password');
-
-    if (storedEmail === email && storedPassword === password) {
-      setErrorMessage('');
-      console.log('Logueado exitosamente!');
-    } else {
-      setErrorMessage('Contraseña o email invalidos.');
+    try {
+      const resultAction = await dispatch(login({ email, password }));
+      console.log('Respuesta del servidor:', resultAction); // Para ver la respuesta completa
+      
+      if (resultAction.meta.requestStatus === 'fulfilled') {
+        setErrorMessage('');
+        navigate('/home');
+      } else {
+        // Obtener el mensaje de error específico de la API
+        const errorMsg = resultAction.payload?.message || resultAction.error?.message;
+        setErrorMessage(errorMsg || 'Error al iniciar sesión. Por favor intente nuevamente.');
+      }
+    } catch (error) {
+      console.log('Error detallado:', error); // Para ver el error completo
+      setErrorMessage(error.message || 'Error al iniciar sesión');
     }
   };
-
+  
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
       <div className="hidden md:flex items-center justify-center bg-blue-50 w-full md:w-1/2">
@@ -45,14 +59,16 @@ export function LoginPage() {
                 Email or Phone Number
               </label>
               <input
-                type="text"
+                type="email"
                 id="email"
                 value={email}
                 onChange={handleEmailChange}
                 className="w-full px-0 py-2 border-b border-gray-300 bg-transparent focus:outline-none focus:ring-0 focus:border-blue-500"
-                placeholder="Ingresa tu email o número de teléfono"
+                placeholder="Ingresa tu email"
+                required
               />
             </div>
+
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                 Password
@@ -64,11 +80,14 @@ export function LoginPage() {
                 onChange={handlePasswordChange}
                 className="w-full px-0 py-2 border-b border-gray-300 bg-transparent focus:outline-none focus:ring-0 focus:border-red-500"
                 placeholder="Ingresa tu contraseña"
+                required
               />
             </div>
+
             {errorMessage && (
               <p className="text-red-500 text-sm">{errorMessage}</p>
             )}
+
             <div className="flex items-center justify-between">
               <button
                 type="submit"

@@ -1,6 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { registerUser } from '../services/api';
+import { registerUser, loginUser } from '../services/api';
 
+
+export const login = createAsyncThunk(
+  'auth/login',
+  async (credentials) => {
+    try {
+      const response = await loginUser(credentials);
+      return response;
+    } catch (error) {
+      if (error.response) {
+        throw new Error(error.response.data.message);
+      }
+      throw new Error('Error en el inicio de sesión');
+    }
+  }
+);
 
 export const register = createAsyncThunk(
   'auth/register',
@@ -16,7 +31,6 @@ export const register = createAsyncThunk(
     }
   }
 );
-
 
 const authSlice = createSlice({
   name: 'auth',
@@ -38,17 +52,17 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(register.pending, (state) => {
+      .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(register.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
         localStorage.setItem('token', action.payload.token);
       })
-      .addCase(register.rejected, (state, action) => {
+      .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });
