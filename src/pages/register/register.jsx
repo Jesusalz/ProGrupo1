@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../../store/authSlice';
 import ImagenCarrito from '../../../img_login.jpeg';
 
@@ -141,9 +141,9 @@ export function Register() {
 
             <p className="text-center text-sm text-gray-600">
               Already have an account?{' '}
-              <a href="/login" className="text-red-500 hover:underline">
+              <Link to="/login" className="text-red-500 hover:underline">
                 Log in
-              </a>
+              </Link>
             </p>
           </form>
         </div>
