@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../store/authSlice';
 import ImagenCarrito from '../../../img_login.jpeg';
 
@@ -102,6 +102,10 @@ export function LoginPage() {
               </div>
             </div>
           </form>
+          <Link to={"/register"} 
+          className="block text-center w-full bg-gray-200 text-gray-800 p-3 rounded-md hover:bg-gray-300 transition duration-300 mt-4">
+            Create account
+          </Link>
         </div>
       </div>
     </div>
