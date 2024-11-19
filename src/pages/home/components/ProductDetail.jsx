@@ -62,7 +62,7 @@ export const ProductDetail = ({ product }) => {
           </div>
 
           <div className="space-y-2">
-            <p className="text-2xl font-bold text-red-600">${product.price}</p>
+            <p className="text-2xl font-bold text-gray-800">${product.price}</p>
             <p className={`text-sm ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
               {product.stock > 0 ? `${product.stock} unidades disponibles` : 'Sin stock'}
             </p>
