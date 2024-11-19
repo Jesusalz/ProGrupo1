@@ -28,7 +28,7 @@ export function LoginPage() {
       
       if (resultAction.meta.requestStatus === 'fulfilled') {
         setErrorMessage('');
-        navigate('/home');
+        navigate('/');
       } else {
         // Obtener el mensaje de error específico de la API
         const errorMsg = resultAction.payload?.message || resultAction.error?.message;
