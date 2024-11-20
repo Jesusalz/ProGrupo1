@@ -18,8 +18,8 @@ export const NavBar = () => {
 // Color del NavBar
   return (
     <>
-      <header className="border-b-2 border-gray-400 flex justify-center items-center gap-6 w-full m-auto p-6">
-      <h1 className='flex w-40 font-bold text-2xl'>Grupo 1</h1>
+      <header className="border-b-2 border-gray-400 flex justify-center items-center gap-16 m-auto p-6">
+      <h1 className='flex w-72 font-bold text-2xl'>Grupo 1</h1>
       <Nav />
       <div className='flex justify-center items-center bg-slate-100 rounded gap-4 shadow-slate-500'>
         <input type="text"
