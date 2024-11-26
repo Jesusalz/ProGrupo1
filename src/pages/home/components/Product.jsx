@@ -3,6 +3,9 @@ import Favorite from '../../../../public/favorite.svg';
 import View from '../../../../public/view.svg';
 
 export default function Product({ product }) {
+
+  
+
   return (
         <div className="relative bg-slate-50 border rounded-lg p-4 shadow-md group">
           <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">

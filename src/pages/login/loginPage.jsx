@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from '../../store/authSlice';
 import ImagenCarrito from '../../../img_login.jpeg';
+import { loginUser } from "../../services/auth";
+import { SetUserLog } from "../../store/authSlice";
 
 export function LoginPage() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const nav = useNavigate();
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, SetLoading] = useState(false);
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -20,23 +21,29 @@ export function LoginPage() {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    SetLoading(true)
+    e.preventDefault();
+    if(password === '' || email === '') return message.info("Invalid information")
+    const datos = {
+        email: email,
+        password: password
+    }
+
+    console.log(datos)
+
     try {
-      const resultAction = await dispatch(login({ email, password }));
-      console.log('Respuesta del servidor:', resultAction); // Para ver la respuesta completa
-      
-      if (resultAction.meta.requestStatus === 'fulfilled') {
-        setErrorMessage('');
-        navigate('/');
-      } else {
-        // Obtener el mensaje de error específico de la API
-        const errorMsg = resultAction.payload?.message || resultAction.error?.message;
-        setErrorMessage(errorMsg || 'Error al iniciar sesión. Por favor intente nuevamente.');
-      }
+      const response = await loginUser(datos);
+      console.log(response)
+      const user = response.data.user
+      const accessToken = response.data.backendTokens.accessToken
+      localStorage.setItem("accessToken", accessToken);
+      dispatch(SetUserLog(user))
+      nav('/')
     } catch (error) {
-      console.log('Error detallado:', error); // Para ver el error completo
-      setErrorMessage(error.message || 'Error al iniciar sesión');
+      message.error("Error al iniciar sesión")
+    }finally{
+      SetLoading(false)
     }
   };
   
@@ -53,7 +60,6 @@ export function LoginPage() {
       <div className="flex items-center justify-center w-full md:w-1/2 p-8">
         <div className="w-full max-w-md">
           <h1 className="text-3xl font-bold mb-6 text-gray-800">Log in to Exclusive</h1>
-          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email or Phone Number
@@ -84,16 +90,14 @@ export function LoginPage() {
               />
             </div>
 
-            {errorMessage && (
-              <p className="text-red-500 text-sm">{errorMessage}</p>
-            )}
-
             <div className="flex items-center justify-between">
               <button
                 type="submit"
                 className="w-1/2 bg-red-500 text-white py-1 rounded-md hover:bg-red-600 transition duration-300"
+                onClick={handleSubmit} 
+                disabled={isLoading}
               >
-                Log In
+                {isLoading ? 'Loading..' : 'Log In'}
               </button>
               <div className="text-right ml-2">
                 <a href="/forgot-password" className="text-red-500 hover:underline text-sm">
@@ -101,7 +105,6 @@ export function LoginPage() {
                 </a>
               </div>
             </div>
-          </form>
           <Link to={"/register"} 
           className="block text-center w-full bg-gray-200 text-gray-800 p-3 rounded-md hover:bg-gray-300 transition duration-300 mt-4">
             Create account

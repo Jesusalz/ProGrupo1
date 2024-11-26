@@ -3,10 +3,21 @@ import { useState } from 'react';
 import { MagnifyingGlassIcon, UserCircleIcon, ShoppingCartIcon, HeartIcon } from '@heroicons/react/24/outline';
 import { Nav } from '../../../components';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { ClearUser } from '../../../store/authSlice';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 export const NavBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const navigate = useNavigate();
+  const nav = useNavigate();
+  const userLog = useSelector((state)=> state.user.userLogged);
+
+  const handleLogOut = (e)=>{
+    e.preventDefault();
+    localStorage.removeItem('accessToken')
+    dispatch(ClearUser())
+    nav('/login')
+  }
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -38,7 +49,12 @@ export const NavBar = () => {
         <Link to="/cart">
           <ShoppingCartIcon className="w-6 h-6 hover:text-gray-400 cursor-pointer" />
         </Link>
-        {/*<UserCircleIcon className="w-6 h-6 hover:text-gray-400 cursor-pointer" />*/}
+        {userLog && userLog.name ? (
+                <div className="flex justify-center items-center gap-2">
+                  <UserCircleIcon className="w-6 h-6 hover:text-gray-400 cursor-pointer" />
+                  <button className="flex items-center justify-center gap-1 hover:text-gray-400 cursor-pointer" onClick={handleLogOut}><FaSignOutAlt/>Log Out</button>
+                </div>
+          ) : ""}
       </div>
     </header>
     </>

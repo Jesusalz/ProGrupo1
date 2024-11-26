@@ -1,58 +1,62 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import { register } from '../../store/authSlice';
 import ImagenCarrito from '../../../img_login.jpeg';
+import { registerUser } from "../../services/auth";
+import { message } from "antd";
 
 export function Register() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isLoading } = useSelector(state => state.auth);
-  const [showNotification, setShowNotification] = useState(false);
-  
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
-  const [errorMessage, setErrorMessage] = useState('');
+  const nav = useNavigate();
+  const [isLoading, SetLoading] = useState(false);
+  const [email, SetEmail] = useState('')
+  const [password, SetPassword] = useState('')
+  const [name, SetName] = useState('')
+  const [confirmPassword, SetconfirmPassword] = useState('')
 
-  const handleChange = (event) => {
-    const { id, value } = event.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [id]: value
-    }));
-  };
+  const handleName = (e) => {
+    SetName(e.target.value)
+  }
+  const handleEmail = (e) => {
+    SetEmail(e.target.value);
+  }
+  const handlePass = (e) => {
+    SetPassword(e.target.value)
+  }
+  const handlePassConfirm = (e) => {
+    SetconfirmPassword(e.target.value)
+  }
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      setErrorMessage('Las contraseñas no coinciden');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    SetLoading(true);
+    if (password !== confirmPassword) {
+      message.info("The keys do not match.");
+      SetLoading(false);
       return;
+  }
+    const data = {
+      name: name,
+      email: email,
+      password: password
     }
 
     try {
-      const { name, email, password } = formData;
-      await dispatch(register({ name, email, password })).unwrap();
-      setShowNotification(true);
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
+      const response = await registerUser(data);
+      message.success("It has been created successfully")
+      nav("/login")
     } catch (error) {
-      setErrorMessage(error.message || 'Error en el registro');
+      if(error.response.data.message){
+        message.error(error.response.data.message)
+      }else{
+        message.error("An error has been found, try again.")
+      }
+    } finally {
+      SetLoading(false);
     }
+
   };
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
-      {showNotification && (
-        <div className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-500 ease-in-out">
-          ¡Registro exitoso! Redirigiendo al login...
-        </div>
-      )}
       <div className="hidden md:flex items-center justify-center bg-blue-50 w-full md:w-1/2">
         <img
           src={ImagenCarrito}
@@ -64,7 +68,6 @@ export function Register() {
       <div className="flex items-center justify-center w-full md:w-1/2 p-8">
         <div className="w-full max-w-md">
           <h1 className="text-3xl font-bold mb-6 text-gray-800">Create an Account</h1>
-          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                 Full Name
@@ -72,8 +75,8 @@ export function Register() {
               <input
                 type="text"
                 id="name"
-                value={formData.name}
-                onChange={handleChange}
+                value={name}
+                onChange={handleName}
                 className="w-full px-0 py-2 border-b border-gray-300 bg-transparent focus:outline-none focus:ring-0 focus:border-blue-500"
                 placeholder="Enter your name"
                 required
@@ -87,8 +90,8 @@ export function Register() {
               <input
                 type="email"
                 id="email"
-                value={formData.email}
-                onChange={handleChange}
+                value={email}
+                onChange={handleEmail}
                 className="w-full px-0 py-2 border-b border-gray-300 bg-transparent focus:outline-none focus:ring-0 focus:border-blue-500"
                 placeholder="Enter your email"
                 required
@@ -102,8 +105,8 @@ export function Register() {
               <input
                 type="password"
                 id="password"
-                value={formData.password}
-                onChange={handleChange}
+                value={password}
+                onChange={handlePass}
                 className="w-full px-0 py-2 border-b border-gray-300 bg-transparent focus:outline-none focus:ring-0 focus:border-red-500"
                 placeholder="Enter your password"
                 required
@@ -117,23 +120,18 @@ export function Register() {
               <input
                 type="password"
                 id="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
+                value={confirmPassword}
+                onChange={handlePassConfirm}
                 className="w-full px-0 py-2 border-b border-gray-300 bg-transparent focus:outline-none focus:ring-0 focus:border-red-500"
                 placeholder="Confirm your password"
                 required
               />
             </div>
-
-            {errorMessage && (
-              <p className="text-red-500 text-sm">{errorMessage}</p>
-            )}
-
             <div className="flex items-center justify-between">
               <button
-                type="submit"
                 className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300"
                 disabled={isLoading}
+                onClick={handleSubmit}
               >
                 {isLoading ? 'Creating Account...' : 'Create Account'}
               </button>
@@ -145,7 +143,6 @@ export function Register() {
                 Log in
               </Link>
             </p>
-          </form>
         </div>
       </div>
     </div>
