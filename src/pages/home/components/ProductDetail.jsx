@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '/src/store/cartSlice';
 
 export const ProductDetail = ({ product }) => {
   const [selectedImage, setSelectedImage] = useState(0);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let isSubscribed = true;
@@ -24,6 +27,10 @@ export const ProductDetail = ({ product }) => {
     };
   }, [selectedImage, product.images]);
 
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -41,7 +48,7 @@ export const ProductDetail = ({ product }) => {
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
-                className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 
+                className={`flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2
                   ${selectedImage === index ? 'border-red-500' : 'border-transparent'}`}
               >
                 <img
@@ -80,7 +87,10 @@ export const ProductDetail = ({ product }) => {
           </div>
 
           {product.stock > 0 && (
-            <button className="w-full bg-red-600 text-white py-3 px-6 rounded-lg hover:bg-red-700 transition-colors">
+            <button 
+              onClick={handleAddToCart}
+              className="w-full bg-red-600 text-white py-3 px-6 rounded-lg hover:bg-red-700 transition-colors"
+            >
               Agregar al carrito
             </button>
           )}
