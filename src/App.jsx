@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import TopHeader from './pages/home/components/TopHeader';
 import { NavBar } from './pages/home/components/navBar';
-import { HomePage, LoginPage, Register, AboutUs, NotFound, SearchResults, ProductDetailPage,} from './pages';
+import { HomePage, LoginPage, Register, AboutUs, NotFound, SearchResults, ProductDetailPage, Cart, } from './pages';
 import {Footer} from './pages/footer'; 
 
 
@@ -20,6 +20,7 @@ function App() {
         <Route path="/product/:id" element={<ProductDetailPage />} /> 
         <Route path="/search" element={<SearchResults />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
       <Footer />
     </>
