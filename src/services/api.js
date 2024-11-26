@@ -55,31 +55,6 @@ export const getPixabayImages = async (query, limit = 16) => {
   }
 };
 
-// Funciones de autenticación
-export const registerUser = async (userData) => {
-  try {
-    const response = await api.post('/auth/register', userData);
-    return response.data;
-  } catch (error) {
-    console.error('Error en el registro:', error.response?.data || error.message);
-    throw error.response?.data || { message: 'Error en el registro' };
-  }
-};
-
-export const loginUser = async (credentials) => {
-  try {
-    const response = await api.post('/auth/login', credentials);
-    if (response.data.token) {
-      localStorage.setItem('token', response.data.token);
-      api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-    }
-    return response.data;
-  } catch (error) {
-    console.error('Error en el login:', error.response?.data || error.message);
-    throw error.response?.data || { message: 'Error en el inicio de sesión' };
-  }
-};
-
 export {
   api as default
 };
