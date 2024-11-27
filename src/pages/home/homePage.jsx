@@ -7,17 +7,6 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 export function HomePage() {
-
-  const accessToken = localStorage.getItem('accessToken')
-  useEffect(()=>{
-    const fetchData = async() =>{
-      if(accessToken){
-        const response = await me(accessToken)
-        dispatch(SetUserLog(response.data))
-      } 
-    }
-    fetchData();
-  },[])
   
   const responsive = {
     superLargeDesktop: {

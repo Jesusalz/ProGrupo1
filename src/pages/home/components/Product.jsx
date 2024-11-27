@@ -24,8 +24,7 @@ export default function Product({ product }) {
         className="w-full h-36 object-contain"
       />
 
-      <button 
-        onClick={handleAddToCart}
+      <button
         className="w-full bg-black text-white text-sm font-semibold py-2 mt-4 rounded hover:bg-gray-800 transition opacity-0 group-hover:opacity-100"
       >
         Add To Cart

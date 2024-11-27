@@ -3,11 +3,26 @@ import TopHeader from './pages/home/components/TopHeader';
 import { NavBar } from './pages/home/components/navBar';
 import { HomePage, LoginPage, Register, AboutUs, NotFound, SearchResults, ProductDetailPage, Cart, } from './pages';
 import {Footer} from './pages/footer'; 
+import { useEffect } from "react";
+import { SetUserLog } from "./store/authSlice";
+import { me } from "./services/auth";
 
 
 
 
 function App() {
+
+  const accessToken = localStorage.getItem('accessToken')
+  useEffect(()=>{
+    const fetchData = async() =>{
+      if(accessToken){
+        const response = await me(accessToken)
+        console.log(dispatch(SetUserLog(response.data)))
+      } 
+    }
+    fetchData();
+  },[])
+  
   return (
     <>
       <TopHeader />
