@@ -5,7 +5,7 @@ import { HomePage, LoginPage, Register, AboutUs, NotFound, SearchResults, Produc
 import {Footer} from './pages/footer'; 
 import { useEffect } from "react";
 import { SetUserLog } from "./store/authSlice";
-import { Favorite } from "./pages/favorite";
+import { Favorites } from './pages/favorite/favorite'
 import { me } from "./services/auth";
 
 
@@ -35,7 +35,7 @@ function App() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/product/:id" element={<ProductDetailPage />} /> 
         <Route path="/search" element={<SearchResults />} />
-        <Route path ="/favorite" element={<Favorite/>} />
+        <Route path ="/favorite" element={<Favorites/>} />
         <Route path="*" element={<NotFound />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
