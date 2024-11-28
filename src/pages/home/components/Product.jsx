@@ -5,6 +5,13 @@ import Favorite from '../../../../public/favorite.svg';
 import View from '../../../../public/view.svg';
 
 export default function Product({ product }) {
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
+  
   return (
     <div className="relative bg-slate-50 border rounded-lg p-4 shadow-md group">
       <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
@@ -24,7 +31,7 @@ export default function Product({ product }) {
         className="w-full h-36 object-contain"
       />
 
-      <button
+      <button onClick={handleAddToCart}
         className="w-full bg-black text-white text-sm font-semibold py-2 mt-4 rounded hover:bg-gray-800 transition opacity-0 group-hover:opacity-100"
       >
         Add To Cart

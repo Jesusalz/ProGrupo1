@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 export function Nav() { 
   const cartItems = useSelector(state => state.cart.items);
+  const userLog = useSelector((state)=> state.user.userLogged);
   const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
@@ -20,13 +21,12 @@ export function Nav() {
                     About
                 </NavLink>
             </li>
-          
-            <li>
+          {userLog ? "" : <li>
                 <NavLink to="/login"
                     className={({ isActive }) => isActive ? "text-blue-400" : "hover:text-gray-400"}>
                     Sign up
                 </NavLink>
-            </li>
+            </li>}
         </ul>
     </nav>
   )
