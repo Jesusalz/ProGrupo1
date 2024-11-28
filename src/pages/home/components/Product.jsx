@@ -1,17 +1,36 @@
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../../store/cartSlice';
+import { addToFavorites } from '../../../store/favoriteSlice'; 
 import Favorite from '../../../../public/favorite.svg';
 import View from '../../../../public/view.svg';
 
 export default function Product({ product }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Hook para redirigir
+  const userLog = useSelector((state) => state.user.userLogged); // Accede al usuario logueado desde el authSlice
+  const isAuthenticated = !!userLog; // Verifica si el usuario está autenticado
+
+  const handleAddToFavorites = () => {
+    if (!isAuthenticated) {
+      // Si no está autenticado, redirigir a la página de inicio de sesión
+      navigate('/login');
+    } else {
+      // Si está autenticado, despachar la acción para agregar a favoritos
+      dispatch(addToFavorites(product));
+    }
+  };
+
   return (
     <div className="relative bg-slate-50 border rounded-lg p-4 shadow-md group">
       <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
         -35%
       </div>
       <div className="absolute top-4 right-4 flex flex-col space-y-2">
-        <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition">
+        <button 
+          className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition"
+          onClick={handleAddToFavorites} // Añade el manejador de clics
+        >
           <img src={Favorite} alt="favorite product" />
         </button>
         <Link to={`./product/${product.id}`} className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition">
@@ -26,6 +45,7 @@ export default function Product({ product }) {
 
       <button
         className="w-full bg-black text-white text-sm font-semibold py-2 mt-4 rounded hover:bg-gray-800 transition opacity-0 group-hover:opacity-100"
+        onClick={() => dispatch(addToCart(product))}
       >
         Add To Cart
       </button>
