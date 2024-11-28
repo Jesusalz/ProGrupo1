@@ -19,8 +19,8 @@ export const NavBar = () => {
   const handleLogOut = (e) => {
     e.preventDefault();
     localStorage.removeItem('accessToken')
+    window.location.href = '/';
     dispatch(ClearUser())
-    navigate('/login')
   }
 
   const handleSearch = (e) => {

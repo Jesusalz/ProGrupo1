@@ -56,7 +56,7 @@ export default function Product({ product }) {
       <h3 className="mt-4 text-sm font-medium text-gray-800">{product.title}</h3>
       <div className="flex items-center justify-start mt-2 space-x-2">
         <span className="text-red-500 font-bold text-lg">${product.price}</span>
-        <span className="text-gray-400 line-through text-sm">${product.price * 1.3}</span>
+        <span className="text-gray-400 line-through text-sm">${(product.price * 1.3).toFixed(2)}</span>
       </div>
 
       <div className="flex items-center mt-2">
