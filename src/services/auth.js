@@ -11,5 +11,5 @@ export const loginUser = async (credentials) => {
 }
 
 export const me = async (token) => {
-    return await axios.get(`${API_URL}/auth/me`, { token }); 
+    return await axios.post(`${API_URL}/auth/me`, { token }); 
 }

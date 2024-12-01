@@ -11,16 +11,16 @@ export const NavBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
-  const userLog = useSelector((state)=> state.user.userLogged);
+  const userLog = useSelector((state) => state.user.userLogged);
   const cartItems = useSelector(state => state.cart?.items || []);
   const total = useSelector(state => state.cart?.total || 0);
   const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
-  const handleLogOut = (e)=>{
+  const handleLogOut = (e) => {
     e.preventDefault();
     localStorage.removeItem('accessToken')
+    window.location.href = '/';
     dispatch(ClearUser())
-    navigate('/login')
   }
 
   const handleSearch = (e) => {
@@ -36,7 +36,7 @@ export const NavBar = () => {
       <h1 className='flex w-72 font-bold text-2xl'>Grupo 1</h1>
       <Nav />
       <div className='flex justify-center items-center bg-slate-100 rounded gap-4 shadow-slate-500'>
-        <input 
+        <input
           type="text"
           placeholder="What are you looking for?"
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -48,15 +48,12 @@ export const NavBar = () => {
         </button>
       </div>
       <div className='flex justify-center items-center gap-2'>
-        <Link to="/favorite">
-          <HeartIcon className="w-6 h-6 hover:text-gray-400 cursor-pointer" />
-        </Link>
-        <div className="relative">
-          <button 
+        <div className="relative flex items-center justify-center">
+          <button
             onClick={() => setIsCartOpen(!isCartOpen)}
             className="relative"
           >
-            <ShoppingCartIcon className="w-6 h-6 hover:text-gray-400 cursor-pointer" />
+            <ShoppingCartIcon className="w-6 h-6  hover:text-gray-400 cursor-pointer" />
             {itemCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                 {itemCount}
@@ -66,7 +63,7 @@ export const NavBar = () => {
 
           {isCartOpen && (
             <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-50">
-              <div className="p-4">
+              <div className="p-4 ">
                 <h3 className="text-lg font-semibold mb-2">Shopping Cart</h3>
                 {cartItems.length === 0 ? (
                   <p className="text-gray-500">Your cart is empty</p>
@@ -88,8 +85,8 @@ export const NavBar = () => {
                         <span>Total:</span>
                         <span>${total.toFixed(2)}</span>
                       </div>
-                      <Link 
-                        to="/cart" 
+                      <Link
+                        to="/cart"
                         className="block w-full bg-black text-white text-center py-2 rounded-lg mt-4 hover:bg-gray-800"
                         onClick={() => setIsCartOpen(false)}
                       >
@@ -103,11 +100,14 @@ export const NavBar = () => {
           )}
         </div>
         {userLog && userLog.name ? (
-                <div className="flex justify-center items-center gap-2">
-                  <UserCircleIcon className="w-6 h-6 hover:text-gray-400 cursor-pointer" />
-                  <button className="flex items-center justify-center gap-1 hover:text-gray-400 cursor-pointer" onClick={handleLogOut}><FaSignOutAlt/>Log Out</button>
-                </div>
-          ) : ""}
+          <div className="flex justify-center items-center gap-2">
+            <Link to="/favorite">
+              <HeartIcon className="w-6 h-6 hover:text-gray-400 cursor-pointer" />
+            </Link>
+            <UserCircleIcon className="w-6 h-6 hover:text-gray-400 cursor-pointer" />
+            <button className="flex items-center justify-center gap-1 hover:text-gray-400 cursor-pointer" onClick={handleLogOut}><FaSignOutAlt />Log Out</button>
+          </div>
+        ) : ""}
       </div>
     </header>
   );

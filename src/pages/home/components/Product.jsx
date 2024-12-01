@@ -6,10 +6,14 @@ import Favorite from '../../../../public/favorite.svg';
 import View from '../../../../public/view.svg';
 
 export default function Product({ product }) {
-  const dispatch = useDispatch();
   const navigate = useNavigate(); // Hook para redirigir
   const userLog = useSelector((state) => state.user.userLogged); // Accede al usuario logueado desde el authSlice
   const isAuthenticated = !!userLog; // Verifica si el usuario está autenticado
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
 
   const handleAddToFavorites = () => {
     if (!isAuthenticated) {
@@ -43,9 +47,8 @@ export default function Product({ product }) {
         className="w-full h-36 object-contain"
       />
 
-      <button
+      <button onClick={handleAddToCart}
         className="w-full bg-black text-white text-sm font-semibold py-2 mt-4 rounded hover:bg-gray-800 transition opacity-0 group-hover:opacity-100"
-        onClick={() => dispatch(addToCart(product))}
       >
         Add To Cart
       </button>
@@ -53,7 +56,7 @@ export default function Product({ product }) {
       <h3 className="mt-4 text-sm font-medium text-gray-800">{product.title}</h3>
       <div className="flex items-center justify-start mt-2 space-x-2">
         <span className="text-red-500 font-bold text-lg">${product.price}</span>
-        <span className="text-gray-400 line-through text-sm">${product.price * 1.3}</span>
+        <span className="text-gray-400 line-through text-sm">${(product.price * 1.3).toFixed(2)}</span>
       </div>
 
       <div className="flex items-center mt-2">

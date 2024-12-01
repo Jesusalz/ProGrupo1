@@ -7,23 +7,20 @@ import { useEffect } from "react";
 import { SetUserLog } from "./store/authSlice";
 import { Favorites } from './pages/favorite/favorite'
 import { me } from "./services/auth";
-
-
-
+import { useDispatch } from "react-redux";
 
 function App() {
-
-  const accessToken = localStorage.getItem('accessToken')
-  useEffect(()=>{
-    const fetchData = async() =>{
-      if(accessToken){
-        const response = await me(accessToken)
-        console.log(dispatch(SetUserLog(response.data)))
-      } 
-    }
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchData = async () => {
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
+            const response = await me(accessToken);
+            console.log(dispatch(SetUserLog(response.data)));
+        }
+    };
     fetchData();
-  },[])
-  
+}, []);
   return (
     <>
       <TopHeader />
