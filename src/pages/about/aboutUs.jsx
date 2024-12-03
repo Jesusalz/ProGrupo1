@@ -8,7 +8,7 @@ export function AboutUs() {
     {
       name: "Rodrigo Ale",
       role: "Frontend Developer",
-      img: "https://cdn.discordapp.com/attachments/833077073458364469/1312205081675825212/465606730_562447932998295_8737971712856714723_n.jpg?ex=674d9ff7&is=674c4e77&hm=19c91e620e3275a28e453c4d2d80c1582817af5ef0dfc0fe8f7cd200a76bf6ce&",
+      img: "https://i.postimg.cc/rm8HHmMN/465606730-562447932998295-8737971712856714723-n.jpg",
       social: {
         github: "https://github.com/Raiddzz"
       },
@@ -34,7 +34,7 @@ export function AboutUs() {
     {
       name: "Jose Luis Lopez",
       role: "Frontend Developer",
-      img: "https://cdn.discordapp.com/attachments/1299162495910412362/1311836653442301994/JLL.jpg?ex=674d9a56&is=674c48d6&hm=20604e5a2d4bed5daf98e9fff95f0138707f42176da14bc25976fc946fa17996&", 
+      img: "https://avatars.githubusercontent.com/u/177279044?v=4?s=400", 
       social: {
         github: "https://github.com/lopezjoseluisit",
       },
