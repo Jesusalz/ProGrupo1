@@ -5,6 +5,7 @@ import Product from './components/Product';
 import { SectionTitle } from '../../components';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { Category } from '../category';
 
 export function HomePage() {
   
@@ -39,9 +40,10 @@ export function HomePage() {
   const productsCarousel = products.map((product) => <Product key={product.id} product={product} />);
 
   return (
+    <>
     <div className="container mx-auto w-full p-10">
       <div className='flex items-center pl-2'>
-        < SectionTitle nameCategory="Today's" title="Productos" />
+        < SectionTitle nameCategory="Today's" title="Products" />
       </div>
 
       {status === 'loading' && <p>Cargando...</p>}
@@ -58,5 +60,9 @@ export function HomePage() {
        </div>   
       )}
     </div>
+    <section>
+      <Category />
+    </section>
+    </>
   );
 }
