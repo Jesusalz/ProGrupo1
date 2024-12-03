@@ -55,6 +55,22 @@ export const getPixabayImages = async (query, limit = 16) => {
   }
 };
 
+export const searchProducts = async (query, limit = 10) => {
+  try {
+    const response = await api.get('/products/search', {
+      params: { 
+        search: query, 
+        limit: limit 
+      }
+    });
+    return response.data;  
+  } catch (error) {
+    console.error('Error searching products:', error);
+    return { products: [] };
+  }
+};
 export {
   api as default
 };
+
+
