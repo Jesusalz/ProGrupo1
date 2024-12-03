@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ImagenCarrito from '../../../img_login.jpeg';
 import { loginUser } from "../../services/auth";
 import { SetUserLog } from "../../store/authSlice";
+import { message } from "antd";
 
 export function LoginPage() {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export function LoginPage() {
       dispatch(SetUserLog(user))
       nav('/')
     } catch (error) {
-      message.error("Error al iniciar sesión")
+      message.error(error.response.data.message)
     }finally{
       SetLoading(false)
     }
