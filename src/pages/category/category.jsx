@@ -6,7 +6,7 @@ import Favorite from "../../../public/favorite.svg";
 import View from "../../../public/view.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from '../../store/cartSlice';
-import { addToFavorites } from '../../store/favoriteSlice'; 
+import { addToFavorites } from '../../store/favoriteSlice';
 
 export function Category() {
     const categories = [
@@ -23,7 +23,7 @@ export function Category() {
     const userLog = useSelector((state) => state.user.userLogged); // Accede al usuario logueado desde el authSlice
     const isAuthenticated = !!userLog; // Verifica si el usuario está autenticado
     const dispatch = useDispatch();
-  
+
     /* funcion para cargar beauty principal */
     useEffect(() => {
         const fetchProducts = async () => {
@@ -34,15 +34,6 @@ export function Category() {
         fetchProducts();
     }, []);
 
-    const handleAddToFavorites = () => {
-      if (!isAuthenticated) {
-        // Si no está autenticado, redirigir a la página de inicio de sesión
-        navigate('/login');
-      } else {
-        // Si está autenticado, despachar la acción para agregar a favoritos
-        dispatch(addToFavorites(product));
-      }
-    };
 
     const handleCategoryClick = async (event) => {
         const refactorText = event.target.textContent.toLowerCase().replace(" ", "-");
@@ -87,8 +78,18 @@ export function Category() {
                                     <div className="relative bg-white border rounded-lg p-4 shadow-md group hover:shadow-lg transition">
                                         {/* Botones flotantes */}
                                         <div className="absolute top-4 right-4 flex flex-col space-y-2">
-                                            <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition" 
-                                            onClick={handleAddToFavorites}>
+                                            <button className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition"
+                                                onClick={() => {
+                                                        // Verificar si el usuario está autenticado
+                                                        if (!isAuthenticated) {
+                                                            // Si no está autenticado, redirigir a la página de inicio de sesión
+                                                            navigate('/login');
+                                                        } else {
+                                                            // Si está autenticado, despachar la acción para agregar a favoritos
+                                                            dispatch(addToFavorites(product))
+                                                        }
+                                                    }
+                                                }>
                                                 <img src={Favorite} alt="favorite product" />
                                             </button>
                                             <Link
