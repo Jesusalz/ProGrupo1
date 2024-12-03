@@ -20,7 +20,8 @@ export const NavBar = () => {
     e.preventDefault();
     localStorage.removeItem('accessToken')
     window.location.href = '/';
-    dispatch(ClearUser())
+    dispatch(ClearUser());
+    dispatch(clearFavorites());
   }
 
   const handleSearch = (e) => {

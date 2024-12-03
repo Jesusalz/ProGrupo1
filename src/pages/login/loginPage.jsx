@@ -31,7 +31,6 @@ export function LoginPage() {
     }
 
     console.log(datos)
-
     try {
       const response = await loginUser(datos);
       console.log(response)
