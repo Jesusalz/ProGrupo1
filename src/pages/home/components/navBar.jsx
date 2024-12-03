@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { MagnifyingGlassIcon, UserCircleIcon, ShoppingCartIcon, HeartIcon } from '@heroicons/react/24/outline';
@@ -6,8 +6,10 @@ import { Nav } from '../../../components';
 import { Link } from 'react-router-dom';
 import { ClearUser } from '../../../store/authSlice';
 import { FaSignOutAlt } from 'react-icons/fa';
+import { clearFavorites } from '../../../store/favoriteSlice';
 
 export const NavBar = () => {
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
@@ -19,9 +21,9 @@ export const NavBar = () => {
   const handleLogOut = (e) => {
     e.preventDefault();
     localStorage.removeItem('accessToken')
-    window.location.href = '/';
-    dispatch(ClearUser());
     dispatch(clearFavorites());
+    dispatch(ClearUser());
+    window.location.href = '/';
   }
 
   const handleSearch = (e) => {
