@@ -6,6 +6,16 @@ export const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items, total } = useSelector(state => state.cart);
+  const userLog = useSelector((state) => state.user.userLogged); // Accede al usuario logueado desde el authSlice
+  const isAuthenticated = !!userLog; // Verifica si el usuario está autenticado
+
+  const handleClick = () => {
+    if (isAuthenticated) {
+      navigate('/checkout');
+    } else {
+      navigate('/login');
+    }
+  }
 
   const handleQuantityChange = (id, quantity) => {
     if (quantity < 1) return;
@@ -13,7 +23,7 @@ export const Cart = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-24">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Shopping Cart</h2>
         <button 
@@ -72,7 +82,8 @@ export const Cart = () => {
               <span className="text-xl font-bold">Total:</span>
               <span className="text-xl text-blue-600 font-bold">${total.toFixed(2)}</span>
             </div>
-            <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-[1.02]">
+            <button className="w-full mt-4 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-[1.02]"
+            onClick={handleClick}>
               Proceed to Checkout
             </button>
           </div>

@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { ClearUser } from '../../../store/authSlice';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { searchProducts } from '../../../services/api';
+import { clearFavorites } from '../../../store/favoriteSlice';
 
 // Función de debounce
 function debounce(func, delay) {
@@ -92,8 +93,9 @@ export const NavBar = () => {
   const handleLogOut = (e) => {
     e.preventDefault();
     localStorage.removeItem('accessToken');
-    window.location.href = '/';
     dispatch(ClearUser());
+    dispatch(clearFavorites());
+    window.location.href = '/';
   };
 
   const handleSearchSelect = (productId) => {
